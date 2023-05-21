@@ -1,5 +1,6 @@
 package store.hn.dto;
 
+
 import lombok.Data;
 
 @Data
@@ -7,12 +8,27 @@ public class CartDTO {
 	
 	private int id;
 	
-	private String name;
+	private int quantity;
 	
-	private long price;
+	private Product2 product;
 	
-	private int quantity=1;
+	private Account2 account;
 	
-	private int ac_id;
+	@Data
+	static class Account2{
+		private int id;
+	}
+	
+	@Data
+	static class Product2{
+		
+		private int pro_id;
+		
+		private String pro_name;
+		
+		private double price;
+		
+		private String image_url;
+	}
 
 }

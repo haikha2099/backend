@@ -9,26 +9,23 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import lombok.Data;
 
 @Entity
-@Table(name = "Evaluate")
-public class Evaluate {
+@Table(name="Shipping")
+@Data
+public class Shipping {
+	
 	@Column(name = "id")
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "point", nullable = false)
-	private int point;
+	private String phone;
 	
-	@Column(name = "content", length = 500, nullable = false)
-	private String content;
+	private String address;
 	
-//	@ManyToOne
-//	@JoinColumn(name = "pro_id", nullable = true)
-//	private Product pro_id;
-//	
-//	@ManyToOne
-//	@JoinColumn(name = "user_id", nullable = true)
-//	private Account user_id;
+	@ManyToOne
+	@JoinColumn(name ="ac_id",referencedColumnName = "id")
+	private Account account;
 }

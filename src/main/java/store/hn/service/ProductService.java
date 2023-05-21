@@ -2,11 +2,14 @@ package store.hn.service;
 
 import java.util.List;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import store.hn.dto.ProductDTO;
 import store.hn.entity.Product;
 import store.hn.repository.IProductRepository;
 
@@ -18,11 +21,10 @@ public class ProductService implements IProductService {
 	@Autowired
 	private IProductRepository pdRepository;
 	
+	@Autowired
+	private ModelMapper modelMapper;
 	
-	@Override
-	public List<Product> getListProducts(){
-		return pdRepository.findAll();
-	}
+	
 
 
 	@Override
@@ -34,17 +36,57 @@ public class ProductService implements IProductService {
 
 	@Override
 	public Product getProductInforByID(int id) {
-		// TODO Auto-generated method stub
 		return pdRepository.findById(id).get();
 	}
 
 
-//	@Override
-//	public Product getProductInforById(int pro_id) {
-//		
-//		return pdRepository.getById(pro_id);
-//	}
-
-
 	
+
+
+	@Override
+	public void deleteProduct(int pro_id) {
+		pdRepository.deleteById(pro_id);
+	}
+
+
+	@Override
+	public void updateProduct(int id, Product pd) {
+		Product pdInfor = pdRepository.getById(id);
+		
+		pdInfor.setPro_name(pd.getPro_name());
+		pdInfor.setPro_describe(pd.getPro_describe());
+		pdInfor.setPrice(pd.getPrice());
+		pdInfor.setImage_url(pd.getImage_url());
+		pdInfor.setPro_detail(pd.getPro_detail());
+		pdInfor.setQuantity(pd.getQuantity());
+		pdInfor.setSize(pd.getSize());
+		
+		pdRepository.save(pdInfor);
+	}
+
+	@Override
+	public void creatProduct(ProductDTO pdDTO) {
+		Product newpd = modelMapper.map(pdDTO, Product.class);
+		pdRepository.save(newpd);
+		
+	}
+
+
+	@Override
+	public List<Product> getListProducts() {
+		
+		return pdRepository.findAll(Sort.by(Sort.Direction.DESC, "dateadd"));
+	}
+
+
+	@Override
+	public List<Product> searchProduct(String search) {
+		return pdRepository.searchProduct(search);
+	}
+
+
+	@Override
+	public List<Product> getListFeaturedProducts() {
+		return null;
+	}
 }

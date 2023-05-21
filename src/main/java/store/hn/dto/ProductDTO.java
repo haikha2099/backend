@@ -1,12 +1,10 @@
 package store.hn.dto;
 
-import java.util.Date;
 
 import lombok.Data;
 
 @Data
 public class ProductDTO {
-	
 	private int pro_id;
 	
 	private String pro_name;
@@ -23,7 +21,9 @@ public class ProductDTO {
 	
 	private String size;
 	
-	private Date dateadd;
-	
-	private int cg_id;
+	private Category2 category;
+	@Data
+	static class Category2{
+		private int cg_id;
+	}
 }

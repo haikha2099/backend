@@ -23,17 +23,16 @@ public class Cart {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "name", length = 50, nullable = false)
-	private String name;
-	
-	@Column(name = "price", nullable = false)
-	private long price;
-	
-	@Column(name = "quantity", nullable = false)
+	@Column(name = "quantity")
 	private int quantity;
 	
 	@ManyToOne
 	@JoinColumn(name = "ac_id",referencedColumnName = "id" )
 	private Account account;
+	
+	@ManyToOne
+	@JoinColumn(name ="pro_id",referencedColumnName = "pro_id")
+	private Product product;
+	
 	
 }

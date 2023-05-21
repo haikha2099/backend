@@ -11,11 +11,10 @@ public interface IAccountService extends UserDetailsService{
 
 	List<Account> getListAccounts();
 	
-	void updateAccount (AccountDTO acDTO);
+	void updateAccount (int id,Account ac);
 	
 	void deleteAccount(int id);
 	
-	void addNewAccount(AccountDTO acDTO);
 	
 	public void createAccount(Account ac);
 	

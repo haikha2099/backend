@@ -1,7 +1,11 @@
 package store.hn.service;
 
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
+import org.hibernate.query.criteria.internal.expression.function.CurrentTimestampFunction;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.authority.AuthorityUtils;
@@ -25,22 +29,22 @@ public class AccountService implements IAccountService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		Account ac = acRepository.findByUsername(username);
+		AccountDTO acDTO = modelMapper.map(acRepository.findAccountByUsername(username),AccountDTO.class);
 		
 		System.out.println("load user: ");
-		System.out.println(ac);
+		System.out.println(acDTO);
 		
-		if (ac == null) throw new UsernameNotFoundException(username);
-		if (ac.getRole() != null) {
+		if (acDTO == null) throw new UsernameNotFoundException(username);
+		if (acDTO.getRole() != null) {
 			return new User(
-					ac.getUsername(),
-					ac.getPassword(),
-					AuthorityUtils.createAuthorityList(ac.getRole().toString())
+					acDTO.getUsername(),
+					acDTO.getPassword(),
+					AuthorityUtils.createAuthorityList(acDTO.getRole().toString())
 			);
 		}else {
 			return new User(
-					ac.getUsername(),
-					ac.getPassword(),
+					acDTO.getUsername(),
+					acDTO.getPassword(),
 					AuthorityUtils.createAuthorityList("Customer")
 			);
 		}
@@ -52,21 +56,9 @@ public class AccountService implements IAccountService {
 	}
 
 	@Override
-	public void updateAccount(AccountDTO acDTO) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
 	public void deleteAccount(int id) {
 		acRepository.deleteById(id);
 		
-	}
-
-	@Override
-	public void addNewAccount(AccountDTO acDTO) {
-		Account ac = modelMapper.map(acDTO, Account.class);
-		Account account = acRepository.save(ac);
 	}
 
 	@Override
@@ -90,5 +82,20 @@ public class AccountService implements IAccountService {
 	public boolean isAccountExistsByUsername(String username) {
 		return acRepository.existsByUsername(username);
 	}
+
+	@Override
+	public void updateAccount(int id, Account ac) {
+		Account acinfor = acRepository.getById(id);
+		
+		acinfor.setFullname(ac.getFullname());
+		acinfor.setPhone(ac.getPhone());
+		acinfor.setAddress(ac.getAddress());
+		acinfor.setDateupdate(ac.getDateupdate());
+		
+		acRepository.save(acinfor);
+	}
+
+	
+	
 
 }

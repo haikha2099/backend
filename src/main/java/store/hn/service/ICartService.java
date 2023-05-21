@@ -15,9 +15,5 @@ public interface ICartService {
 	
 	public Cart updateCartItem(int id, int qty);
 	
-	void clearCart();
 	
-	public int getCountItem();
-	
-	public Cart getTotalPrice(int id);
 }

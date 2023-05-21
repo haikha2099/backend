@@ -31,24 +31,24 @@ public class Orders {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
 	
-	@Column(name = "oder_detail", length = 50, nullable = false)
-	private String oder_detail;
+	@Column(name = "name_product", length = 5000)
+	private String name_product;
+	
+	@Column(name = "price")
+	private double price;
 	
 	@Column(name = "dateadd", columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
 	@Temporal(TemporalType.TIMESTAMP)
 	@CreationTimestamp
 	private Date dateadd;
 	
-	@Column(name = "status", nullable = false)
-	//@Column(name = "status", columnDefinition = "ENUM('NOT_ACTIVE', 'ACTIVE')")
-	@Enumerated(EnumType.ORDINAL)
-	private OrderStatus status;
+	@Column(name = "receive_date",length =50)
+	private String receive_date;
 	
-//	@ManyToOne
-//	@JoinColumn(name = "user_id", nullable = true)
-//	private Account user_id;
+	@Column(name = "status",length =50)
+	private boolean status;
 	
-	public enum OrderStatus{
-		
-	}
+	@ManyToOne
+	@JoinColumn(name ="ac_id",referencedColumnName = "id")
+	private Account account;
 }

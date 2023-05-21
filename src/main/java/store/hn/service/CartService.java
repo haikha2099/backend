@@ -5,7 +5,6 @@ import java.util.List;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.web.context.annotation.SessionScope;
 
 import store.hn.dto.CartDTO;
 import store.hn.entity.Cart;
@@ -21,35 +20,17 @@ public class CartService implements ICartService{
 	@Autowired
 	private ModelMapper modelMapper;
 	
-	@Override
-	public List<Cart> getListCartItem() {
-		
-		return ctRepository.findAll();
-	}
 
 	@Override
 	public void addCartItem(CartDTO ctitem) {
 		Cart ctitemnew = modelMapper.map(ctitem, Cart.class);
-		Cart itemnew = ctRepository.save(ctitemnew);
+		ctRepository.save(ctitemnew);
 	}
 
 	@Override
 	public void deleteCartItem(int id) {
 		ctRepository.deleteById(id);
 		
-	}
-
-
-	@Override
-	public void clearCart() {
-		ctRepository.deleteAll();
-		
-	}
-
-	@Override
-	public int getCountItem() {
-		
-		return 0;
 	}
 
 	@Override
@@ -61,12 +42,8 @@ public class CartService implements ICartService{
 	}
 
 	@Override
-	public Cart getTotalPrice(int id) {
-		Cart item = ctRepository.getById(id);
-		item.setPrice(item.getPrice()*item.getQuantity());
-		return item;
+	public List<Cart> getListCartItem() {
+		return ctRepository.findAll() ;
 	}
-
-	
 
 }

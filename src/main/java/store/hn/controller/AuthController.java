@@ -58,7 +58,7 @@ public class AuthController {
 		
 		//Account ac = acRepository.findAccountByUsername(signinDTO.getUsername());
 		AccountDTO acDTO = modelMapper.map(acRepository.findAccountByUsername(signinDTO.getUsername()), AccountDTO.class);
-//		System.out.println(ac);
+		System.out.println(acDTO);
 		
 		if (acDTO == null) throw new UsernameNotFoundException(signinDTO.getUsername());
 		
@@ -66,10 +66,12 @@ public class AuthController {
 		Authentication auth = authManager.authenticate(
 				new UsernamePasswordAuthenticationToken(signinDTO.getUsername(), signinDTO.getPassword())
 		);
-		
+		System.out.println("da qua");
 		SecurityContextHolder.getContext().setAuthentication(auth);
 		
 		String jwtToken = jwtUtils.generateJwtToken(auth);
+		
+		System.out.println(jwtToken);
 		
 		UserDetails userDetails = (UserDetails) auth.getPrincipal();
 		

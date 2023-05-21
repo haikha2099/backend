@@ -36,16 +36,16 @@ public class Account {
 	@Column(name = "password", length = 500, nullable = false)
 	private String password;
 	
-	@Column(name = "fullname", length = 50, nullable = false)
+	@Column(name = "fullname", length = 50)
 	private String fullname;
 	
-	@Column(name = "phone", length = 50, nullable = false)
+	@Column(name = "phone", length = 50)
 	private String phone;
 	
-	@Column(name = "address", length = 250, nullable = false)
+	@Column(name = "address", length = 250)
 	private String address;
 	
-	@Column(name = "email", length = 150, nullable = false)
+	@Column(name = "email", length = 150)
 	private String email;
 	
 	
@@ -57,6 +57,12 @@ public class Account {
 	@Column(name = "role", length = 250)
 	private String role;
 	
-	@OneToMany(mappedBy = "account")
-	private List<Cart> carts; 
+	@OneToMany(mappedBy = "account",cascade=CascadeType.ALL)
+	private List<Cart> carts;
+	
+	@OneToMany(mappedBy = "account",cascade=CascadeType.ALL)
+	private List<Shipping> shipping;
+	
+	@OneToMany(mappedBy = "account",cascade=CascadeType.ALL)
+	private List<Orders> orders;
 }
