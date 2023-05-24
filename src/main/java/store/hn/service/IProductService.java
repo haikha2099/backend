@@ -25,4 +25,8 @@ public interface IProductService {
 	void deleteProduct(int pro_id);
 	
 	void updateProduct(int id, Product pd);
+	
+	List<Product> getListProductByPrice(double firtPrice, double lastPrice);
+	
+	List<Product> getListProductByCategory(int cg_id);
 }

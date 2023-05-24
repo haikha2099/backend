@@ -95,4 +95,20 @@ public class ProductController {
 		message.put("status", 200);
 		return ResponseEntity.status(HttpStatus.OK).body(message.toString());
 	}
+	
+	@GetMapping(value = "/listfilter")
+	private List<ProductDTO> getListProductFilter(@RequestParam double firstPrice,@RequestParam double lastPrice){
+		List<Product> listProduct = pdService.getListProductByPrice(firstPrice, lastPrice);
+		
+		List<ProductDTO> listProductDTO = modelMapper.map(listProduct, new TypeToken< List<ProductDTO> >(){}.getType());
+		return listProductDTO;
+	}
+	
+	@GetMapping(value = "/listbycategory/{cg_id}")
+	private List<ProductDTO> getListProductByCategory(@PathVariable(name = "cg_id") int cg_id){
+		List<Product> listProduct = pdService.getListProductByCategory(cg_id);
+		
+		List<ProductDTO> listProductDTO = modelMapper.map(listProduct, new TypeToken< List<ProductDTO> >(){}.getType());
+		return listProductDTO;
+	}
 }

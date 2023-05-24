@@ -1,5 +1,6 @@
 package store.hn.service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.modelmapper.ModelMapper;
@@ -89,4 +90,31 @@ public class ProductService implements IProductService {
 	public List<Product> getListFeaturedProducts() {
 		return null;
 	}
+
+
+	@Override
+	public List<Product> getListProductByPrice(double firtPrice, double lastPrice) {
+		List<Product> prolist = pdRepository.findAll();
+		
+		List<Product> list = new ArrayList<Product>();
+		
+		for(int i=0 ;i< prolist.size(); i++) {
+			if(prolist.get(i).getPrice() >= firtPrice && prolist.get(i).getPrice() < lastPrice) {
+				
+				list.add(prolist.get(i));
+			}
+		}
+		
+		return list;
+	}
+
+
+	@Override
+	public List<Product> getListProductByCategory(int cg_id) {
+		
+		return pdRepository.getListByCategory(cg_id);
+	}
+
+
+	
 }

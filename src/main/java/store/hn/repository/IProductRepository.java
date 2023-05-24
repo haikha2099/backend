@@ -17,4 +17,7 @@ public interface IProductRepository extends JpaRepository<Product, Integer>, Jpa
 	
 	@Query(value ="SELECT * FROM Product pd WHERE pd.pro_name like %?1%", nativeQuery = true)
 	List <Product> searchProduct(String search);
+	
+	@Query(value ="SELECT * FROM Product pd WHERE pd.cg_id = ?1", nativeQuery = true)
+	List <Product> getListByCategory(int cg_id);
 }
